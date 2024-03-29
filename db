@@ -1,0 +1,34 @@
+import java.io.File;
+import net.sf.javaml.core.Dataset;
+import net.sf.javaml.tools.data.FileHandler;
+import net.sf.javaml.clustering.Clusterer;
+import net.sf.javaml.clustering.DensityBasedSpatialClustering;
+import net.sf.javaml.core.Instance;
+
+public class dbscan {
+    public static void main(String[] args) {
+        try {
+
+            String irispath = "C:/Users/zaina/OneDrive/Desktop/cluster/src/iris.csv";
+            File iris = new File(irispath);
+
+            Dataset n = FileHandler.loadDataset(iris, 4, ",");
+            Clusterer dbscan = new DensityBasedSpatialClustering(0.1, 4); 
+            //epsilon 0.1
+            //minpoint 4
+            Dataset[] cluster = dbscan.cluster(n);
+
+            for (int i = 0; i < cluster.length; i++) {
+                System.out.println("DBSCAN");
+                System.out.println("-----------");
+                System.out.println("Cluster" + i + ":"+cluster[i].size() + " instances");
+                for (Instance instance : cluster[i]) {
+                    System.out.println(instance);
+                }
+                System.out.println();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
